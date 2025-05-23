@@ -24,9 +24,10 @@ psycopg2==2.9.10
 * DBeaver
 
 ## Installation
-create .env file in /backend/app/core
-add DATABASE_URL Variable in .env to connect database
+1. create .env file in /backend/app/core
+2. add DATABASE_URL Variable in .env to connect database
 
+3. run docker compose
 ```bash
 docker-compose up -d --build
 ```
