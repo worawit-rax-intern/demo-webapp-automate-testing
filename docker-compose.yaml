@@ -8,7 +8,7 @@ services:
       POSTGRES_DB: my_database              # ชื่อฐานข้อมูลเริ่มต้น
       TZ: Asia/Bangkok                      # ตั้งค่า time zone
     ports:
-      - "15432:5432"                         # เปิดพอร์ต 5432 สำหรับ PostgreSQL
+      - "5432:5432"                         # เปิดพอร์ต 5432 สำหรับ PostgreSQL
     volumes:
       - ./postgresql/postgresql-data/postgres:/var/lib/postgresql/data # เก็บข้อมูล PostgreSQL ในโฟลเดอร์ ./data/postgres
     healthcheck:
