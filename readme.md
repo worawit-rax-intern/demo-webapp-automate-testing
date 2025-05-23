@@ -11,7 +11,7 @@ sqlmodel==0.0.24
 psycopg2==2.9.10
 ```
 
-## Frontend
+### Frontend
 * Nextjs 15.3.2 with Typescript
 * Tailwindcss 4
 * Shadcn/ui
