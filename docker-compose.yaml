@@ -1,0 +1,59 @@
+services:
+  db:
+    build: ./postgresql
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin                  # ชื่อผู้ใช้สำหรับ PostgreSQL
+      POSTGRES_PASSWORD: admin123           # รหัสผ่านสำหรับ PostgreSQL
+      POSTGRES_DB: my_database              # ชื่อฐานข้อมูลเริ่มต้น
+      TZ: Asia/Bangkok                      # ตั้งค่า time zone
+    ports:
+      - "15432:5432"                         # เปิดพอร์ต 5432 สำหรับ PostgreSQL
+    volumes:
+      - ./postgresql/postgresql-data/postgres:/var/lib/postgresql/data # เก็บข้อมูล PostgreSQL ในโฟลเดอร์ ./data/postgres
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com # อีเมลสำหรับเข้าใช้งาน pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: admin         # รหัสผ่านสำหรับเข้าใช้งาน pgAdmin
+      TZ: Asia/Bangkok                        # ตั้งค่า time zone
+    ports:
+      - "5050:80"                             # เปิดพอร์ต 5050 สำหรับ pgAdmin
+    depends_on:
+      - db                              # รอ PostgreSQL พร้อมก่อนเปิด pgAdmin
+    volumes:
+      - ./postgresql/postgresql-data/pgadmin:/var/lib/pgadmin       # เก็บข้อมูล pgAdmin ในโฟลเดอร์ ./data/pgadmin
+
+  backend-app:
+    container_name: backend-app
+    build: 
+      context: ./backend/app
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:  # Health check for backend-app
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]  # Adjust the endpoint as necessary
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  
+  frontend-app:
+    container_name: nextjs-frontend-app
+    build: 
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      backend-app:
+        condition: service_healthy
+      
+volumes:
+  postgres-data:
+  pgadmin-data:
