@@ -16,6 +16,13 @@ psycopg2==2.9.10
 * Tailwindcss 4
 * Shadcn/ui
 
+### Database
+* PostgreSQL
+
+### Database Management Tools
+* pgadmin
+* DBeaver
+
 ## Installation
 ```bash
 docker-compose up -d --build
