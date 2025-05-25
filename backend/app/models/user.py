@@ -27,6 +27,7 @@ class UserPublic(UserBase):
 class UserCreate(UserBase):
     email : str
     password : str
+    role : int
 
 class UserUpdate(SQLModel):
     name : str | None = None

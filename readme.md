@@ -23,6 +23,9 @@ psycopg2==2.9.10
 * pgadmin
 * DBeaver
 
+### Environments
+* Docker Compose (docker-compose.yaml)
+
 ## Installation
 1. create .env file in /backend/app/core
 2. add DATABASE_URL Variable in .env to connect database
